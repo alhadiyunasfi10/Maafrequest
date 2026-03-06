@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Maafin Aku Ya 🥺</title>
+
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: sans-serif;
+        background: linear-gradient(135deg, #ffd6e7, #ffeef5);
+        overflow: hidden;
+      }
+
+      /* CARD */
+      .card {
+        background: white;
+        width: 90%;
+        max-width: 380px;
+        padding: 30px;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      }
+
+      /* kucing */
+      .cat {
+        font-size: 60px;
+        animation: catMove 2s infinite alternate;
+      }
+
+      @keyframes catMove {
+        0% {
+          transform: translateY(0);
+        }
+        100% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .buttons {
+        margin-top: 30px;
+        position: relative;
+        height: 140px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 20px;
+      }
+
+      button {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      #yes {
+        background: #ff4f8b;
+        color: white;
+        transform-origin: top center; /* membesar ke bawah */
+        margin-top: 10px;
+      }
+
+      #no {
+        background: #ddd;
+        position: absolute;
+        left: 60%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      /* hati */
+      .heart {
+        position: fixed;
+        font-size: 25px;
+        animation: floatUp 3s linear forwards;
+      }
+
+      @keyframes floatUp {
+        0% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-400px);
+          opacity: 0;
+        }
+      }
+
+      /* confetti */
+      .confetti {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        background: red;
+        animation: fall 3s linear forwards;
+      }
+
+      @keyframes fall {
+        0% {
+          transform: translateY(-100px);
+        }
+        100% {
+          transform: translateY(100vh);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <audio id="bgmusic" loop>
+      <source
+        src="https://cdn.pixabay.com/audio/2023/03/27/audio_5c3c2b5c89.mp3"
+        type="audio/mpeg"
+      />
+    </audio>
+
+    <div class="card">
+      <div class="cat">🐱</div>
+
+      <h2>Maafin Aku Ya 🥺</h2>
+
+      <p id="text">
+        Aku minta maaf kalau kemarin bikin kamu kecewa saama aku. Maffin yaa
+        pipi cantik 💖
+      </p>
+
+      <div class="buttons" id="area">
+        <button id="yes">Ya ❤️</button>
+        <button id="no">Tidak</button>
+      </div>
+    </div>
+
+    <script>
+      const noBtn = document.getElementById("no");
+      const yesBtn = document.getElementById("yes");
+      const text = document.getElementById("text");
+      const area = document.getElementById("area");
+
+      let scaleYes = 1;
+      let scaleNo = 1;
+
+      const messages = [
+        "Ayolah maafin 🥺",
+        "Jangan gitu dong 😭",
+        "Maaf yaa sayang jangan marah terus 😢",
+        "Kasian kucingnya 😿",
+        "Beneran aku nyesal ayang 😭",
+        "Nantik pergi yaa 🥺",
+        "Pleaseeeee 🥺",
+      ];
+
+      let i = 0;
+
+      function moveButton() {
+        const maxX = area.clientWidth - noBtn.offsetWidth;
+        const maxY = area.clientHeight - noBtn.offsetHeight;
+
+        const x = Math.random() * maxX;
+        const y = Math.random() * maxY;
+
+        noBtn.style.left = x + "px";
+        noBtn.style.top = y + "px";
+
+        /* ubah teks */
+        text.innerHTML = messages[i % messages.length];
+        i++;
+
+        /* yes makin besar */
+        scaleYes += 0.15;
+        yesBtn.style.transform = "scale(" + scaleYes + ")";
+
+        /* tidak makin kecil */
+        scaleNo -= 0.05;
+        if (scaleNo < 0.4) scaleNo = 0.4;
+        noBtn.style.transform = "translate(-50%,-50%) scale(" + scaleNo + ")";
+      }
+
+      noBtn.addEventListener("mouseover", moveButton);
+      noBtn.addEventListener("touchstart", moveButton);
+
+      /* tombol ya */
+
+      yesBtn.onclick = function () {
+        text.innerHTML = "Makasih sayang udah maafin aku 🥰❤️";
+
+        /* animasi hati */
+        for (let i = 0; i < 25; i++) {
+          let heart = document.createElement("div");
+          heart.className = "heart";
+          heart.innerHTML = "💖";
+
+          heart.style.left = Math.random() * 100 + "vw";
+          heart.style.bottom = "0";
+
+          document.body.appendChild(heart);
+
+          setTimeout(() => heart.remove(), 3000);
+        }
+
+        /* confetti */
+
+        for (let i = 0; i < 40; i++) {
+          let c = document.createElement("div");
+          c.className = "confetti";
+
+          c.style.left = Math.random() * 100 + "vw";
+          c.style.background = `hsl(${Math.random() * 360},100%,50%)`;
+
+          document.body.appendChild(c);
+
+          setTimeout(() => c.remove(), 3000);
+        }
+
+        /* redirect WA */
+
+        const nomor = "6285810388564";
+        const pesan = "iyaa udah aku maaffin sayang ❤️";
+
+        const url =
+          "https://wa.me/" + nomor + "?text=" + encodeURIComponent(pesan);
+
+        setTimeout(() => {
+          window.location.href = url;
+        }, 3500);
+      };
+      const music = document.getElementById("bgmusic");
+
+      function playMusic() {
+        music.volume = 0.5;
+        music.play().catch(() => {});
+      }
+
+      /* mulai musik saat user klik layar */
+      document.addEventListener("click", playMusic);
+      document.addEventListener("touchstart", playMusic);
+    </script>
+  </body>
+</html>
